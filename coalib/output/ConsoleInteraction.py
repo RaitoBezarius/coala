@@ -1,3 +1,5 @@
+from termcolor import colored
+
 try:
     # This import has side effects and is needed to make input() behave nicely
     import readline  # pylint: disable=unused-import
@@ -31,6 +33,7 @@ FILE_NAME_COLOR = "blue"
 FILE_LINES_COLOR = "blue"
 HIGHLIGHTED_CODE_COLOR = 'red'
 SUCCESS_COLOR = 'green'
+REQUIRED_SETTINGS_COLOR = 'green'
 CLI_ACTIONS = (OpenEditorAction(),
                ApplyPatchAction(),
                PrintDebugMessageAction(),
@@ -436,7 +439,9 @@ def require_setting(setting_name, arr):
     else:
         needed = ", ".join(arr[1:-1]) + " and " + arr[-1]
 
-    return input(STR_GET_VAL_FOR_SETTING.format(setting_name, arr[0], needed))
+    return input(
+        colored(STR_GET_VAL_FOR_SETTING.format(setting_name, arr[0], needed),
+                REQUIRED_SETTINGS_COLOR))
 
 
 def acquire_settings(log_printer, settings_names_dict):
